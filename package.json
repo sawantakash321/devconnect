@@ -1,0 +1,19 @@
+{
+  "name": "devconnect",
+  "version": "1.0.0",
+  "description": "Social network for developers",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sawantakash321/devconnect.git"
+  },
+  "author": "Akash Sawant",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sawantakash321/devconnect/issues"
+  },
+  "homepage": "https://github.com/sawantakash321/devconnect#readme"
+}
