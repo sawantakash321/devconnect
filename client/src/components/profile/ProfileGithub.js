@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 class ProfileGithub extends Component {
 	constructor(props) {
 		super(props);
-
 		this.state = {
 			clientId: '72dd58ae5671e4d1d12f',
 			clientSecret: '04737082f72f32c4e6bc2614ca27160b097b1152',
@@ -18,6 +17,7 @@ class ProfileGithub extends Component {
 	componentDidMount() {
 		const { username } = this.props;
 		const { count, sort, clientId, clientSecret } = this.state;
+		console.log(username, count, sort, clientId, clientSecret);
 
 		fetch(
 			`https://api.github.com/users/${username}/repos?per_page=${count}&sort=${sort}&client_id=${clientId}&client_secret=${clientSecret}`

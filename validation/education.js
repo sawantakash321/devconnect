@@ -10,7 +10,7 @@ module.exports = function validateEducationInput(data) {
 	data.from = !isEmpty(data.from) ? data.from : '';
 
 	if (Validator.isEmpty(data.school)) {
-		errors.school = 'School Title field is required';
+		errors.school = 'School field is required';
 	}
 
 	if (Validator.isEmpty(data.degree)) {

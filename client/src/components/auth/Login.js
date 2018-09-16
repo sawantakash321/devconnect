@@ -7,12 +7,12 @@ import TextFieldGroup from '../common/TextFieldGroup';
 class Login extends Component {
 	constructor() {
 		super();
-
 		this.state = {
 			email: '',
 			password: '',
 			errors: {}
 		};
+
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 	}
@@ -27,16 +27,12 @@ class Login extends Component {
 		if (nextProps.auth.isAuthenticated) {
 			this.props.history.push('/dashboard');
 		}
+
 		if (nextProps.errors) {
-			this.setState({
-				errors: nextProps.errors
-			});
+			this.setState({ errors: nextProps.errors });
 		}
 	}
 
-	onChange(e) {
-		this.setState({ [e.target.name]: e.target.value });
-	}
 	onSubmit(e) {
 		e.preventDefault();
 
@@ -44,11 +40,17 @@ class Login extends Component {
 			email: this.state.email,
 			password: this.state.password
 		};
+
 		this.props.loginUser(userData);
+	}
+
+	onChange(e) {
+		this.setState({ [e.target.name]: e.target.value });
 	}
 
 	render() {
 		const { errors } = this.state;
+
 		return (
 			<div className="login">
 				<div className="container">
@@ -76,7 +78,6 @@ class Login extends Component {
 									onChange={this.onChange}
 									error={errors.password}
 								/>
-
 								<input type="submit" className="btn btn-info btn-block mt-4" />
 							</form>
 						</div>

@@ -4,10 +4,10 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerUser } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
+
 class Register extends Component {
 	constructor() {
 		super();
-
 		this.state = {
 			name: '',
 			email: '',
@@ -15,14 +15,17 @@ class Register extends Component {
 			password2: '',
 			errors: {}
 		};
+
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 	}
+
 	componentDidMount() {
 		if (this.props.auth.isAuthenticated) {
 			this.props.history.push('/dashboard');
 		}
 	}
+
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.errors) {
 			this.setState({ errors: nextProps.errors });
@@ -32,6 +35,7 @@ class Register extends Component {
 	onChange(e) {
 		this.setState({ [e.target.name]: e.target.value });
 	}
+
 	onSubmit(e) {
 		e.preventDefault();
 
@@ -65,18 +69,15 @@ class Register extends Component {
 									onChange={this.onChange}
 									error={errors.name}
 								/>
-
 								<TextFieldGroup
-									placeholder="Email Address"
+									placeholder="Email"
 									name="email"
 									type="email"
 									value={this.state.email}
 									onChange={this.onChange}
 									error={errors.email}
-									info="This site uses Gravatar so if you want a profile image, use
-									a Gravatar email"
+									info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
 								/>
-
 								<TextFieldGroup
 									placeholder="Password"
 									name="password"
@@ -85,7 +86,6 @@ class Register extends Component {
 									onChange={this.onChange}
 									error={errors.password}
 								/>
-
 								<TextFieldGroup
 									placeholder="Confirm Password"
 									name="password2"

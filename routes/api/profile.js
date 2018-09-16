@@ -10,22 +10,23 @@ const validateEducationInput = require('../../validation/education');
 
 // Load Profile Model
 const Profile = require('../../models/Profile');
-//Load User Model
+// Load User Model
 const User = require('../../models/User');
 
 // @route   GET api/profile/test
 // @desc    Tests profile route
 // @access  Public
-router.get('/test', (req, res) => res.json({ msg: 'profile Works' }));
+router.get('/test', (req, res) => res.json({ msg: 'Profile Works' }));
 
 // @route   GET api/profile
-// @desc    Get Current users profile
+// @desc    Get current users profile
 // @access  Private
 router.get(
 	'/',
 	passport.authenticate('jwt', { session: false }),
 	(req, res) => {
 		const errors = {};
+
 		Profile.findOne({ user: req.user.id })
 			.populate('user', ['name', 'avatar'])
 			.then(profile => {
@@ -41,9 +42,10 @@ router.get(
 
 // @route   GET api/profile/all
 // @desc    Get all profiles
-// @access  public
+// @access  Public
 router.get('/all', (req, res) => {
 	const errors = {};
+
 	Profile.find()
 		.populate('user', ['name', 'avatar'])
 		.then(profiles => {
@@ -59,10 +61,11 @@ router.get('/all', (req, res) => {
 
 // @route   GET api/profile/handle/:handle
 // @desc    Get profile by handle
-// @access  public
+// @access  Public
 
 router.get('/handle/:handle', (req, res) => {
 	const errors = {};
+
 	Profile.findOne({ handle: req.params.handle })
 		.populate('user', ['name', 'avatar'])
 		.then(profile => {
@@ -76,12 +79,13 @@ router.get('/handle/:handle', (req, res) => {
 		.catch(err => res.status(404).json(err));
 });
 
-// @route   POST api/profile/user/:user_id
+// @route   GET api/profile/user/:user_id
 // @desc    Get profile by user ID
-// @access  public
+// @access  Public
 
 router.get('/user/:user_id', (req, res) => {
 	const errors = {};
+
 	Profile.findOne({ user: req.params.user_id })
 		.populate('user', ['name', 'avatar'])
 		.then(profile => {
@@ -98,7 +102,7 @@ router.get('/user/:user_id', (req, res) => {
 });
 
 // @route   POST api/profile
-// @desc    Create OR Update/Edit User Profile
+// @desc    Create or edit user profile
 // @access  Private
 router.post(
 	'/',
@@ -106,7 +110,7 @@ router.post(
 	(req, res) => {
 		const { errors, isValid } = validateProfileInput(req.body);
 
-		// Check validation
+		// Check Validation
 		if (!isValid) {
 			// Return any errors with 400 status
 			return res.status(400).json(errors);
@@ -123,9 +127,7 @@ router.post(
 		if (req.body.status) profileFields.status = req.body.status;
 		if (req.body.githubusername)
 			profileFields.githubusername = req.body.githubusername;
-
-		// skills - Split into array
-
+		// Skills - Spilt into array
 		if (typeof req.body.skills !== 'undefined') {
 			profileFields.skills = req.body.skills.split(',');
 		}
@@ -164,7 +166,6 @@ router.post(
 	}
 );
 
-<<<<<<< HEAD
 // @route   POST api/profile/experience
 // @desc    Add experience to profile
 // @access  Private
@@ -174,11 +175,12 @@ router.post(
 	(req, res) => {
 		const { errors, isValid } = validateExperienceInput(req.body);
 
-		// Check validation
+		// Check Validation
 		if (!isValid) {
 			// Return any errors with 400 status
 			return res.status(400).json(errors);
 		}
+
 		Profile.findOne({ user: req.user.id }).then(profile => {
 			const newExp = {
 				title: req.body.title,
@@ -190,7 +192,7 @@ router.post(
 				description: req.body.description
 			};
 
-			// Add to experience array
+			// Add to exp array
 			profile.experience.unshift(newExp);
 
 			profile.save().then(profile => res.json(profile));
@@ -202,16 +204,17 @@ router.post(
 // @desc    Add education to profile
 // @access  Private
 router.post(
-	'/experience',
+	'/education',
 	passport.authenticate('jwt', { session: false }),
 	(req, res) => {
 		const { errors, isValid } = validateEducationInput(req.body);
 
-		// Check validation
+		// Check Validation
 		if (!isValid) {
 			// Return any errors with 400 status
 			return res.status(400).json(errors);
 		}
+
 		Profile.findOne({ user: req.user.id }).then(profile => {
 			const newEdu = {
 				school: req.body.school,
@@ -223,7 +226,7 @@ router.post(
 				description: req.body.description
 			};
 
-			// Add to experience array
+			// Add to edu array
 			profile.education.unshift(newEdu);
 
 			profile.save().then(profile => res.json(profile));
@@ -259,7 +262,7 @@ router.delete(
 // @desc    Delete education from profile
 // @access  Private
 router.delete(
-	'/experience/:edu_id',
+	'/education/:edu_id',
 	passport.authenticate('jwt', { session: false }),
 	(req, res) => {
 		Profile.findOne({ user: req.user.id })
@@ -294,73 +297,4 @@ router.delete(
 	}
 );
 
-||||||| parent of 55fe944... Added education and experience routes
-=======
-// @route   POST api/profile/experience
-// @desc    Add experience to profile
-// @access  Private
-router.post(
-	'/experience',
-	passport.authenticate('jwt', { session: false }),
-	(req, res) => {
-		const { errors, isValid } = validateExperienceInput(req.body);
-
-		// Check validation
-		if (!isValid) {
-			// Return any errors with 400 status
-			return res.status(400).json(errors);
-		}
-		Profile.findOne({ user: req.user.id }).then(profile => {
-			const newExp = {
-				title: req.body.title,
-				company: req.body.company,
-				location: req.body.location,
-				from: req.body.from,
-				to: req.body.to,
-				current: req.body.current,
-				description: req.body.description
-			};
-
-			// Add to experience array
-			profile.experience.unshift(newExp);
-
-			profile.save().then(profile => res.json(profile));
-		});
-	}
-);
-
-// @route   POST api/profile/education
-// @desc    Add education to profile
-// @access  Private
-router.post(
-	'/experience',
-	passport.authenticate('jwt', { session: false }),
-	(req, res) => {
-		const { errors, isValid } = validateEducationInput(req.body);
-
-		// Check validation
-		if (!isValid) {
-			// Return any errors with 400 status
-			return res.status(400).json(errors);
-		}
-		Profile.findOne({ user: req.user.id }).then(profile => {
-			const newEdu = {
-				school: req.body.school,
-				degree: req.body.degree,
-				fieldofstudy: req.body.fieldofstudy,
-				from: req.body.from,
-				to: req.body.to,
-				current: req.body.current,
-				description: req.body.description
-			};
-
-			// Add to experience array
-			profile.education.unshift(newEdu);
-
-			profile.save().then(profile => res.json(profile));
-		});
-	}
-);
-
->>>>>>> 55fe944... Added education and experience routes
 module.exports = router;

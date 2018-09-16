@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser, logoutUser } from './actions/authActions';
-import { setCurrentProfile } from './actions/profileActions';
+import { clearCurrentProfile } from './actions/profileActions';
 
 import { Provider } from 'react-redux';
 import store from './store';
@@ -22,18 +22,17 @@ import AddExperience from './components/add-credentials/AddExperience';
 import AddEducation from './components/add-credentials/AddEducation';
 import Profiles from './components/profiles/Profiles';
 import Profile from './components/profile/Profile';
-import NotFound from './components/not-found/NotFound';
 import Posts from './components/posts/Posts';
 import Post from './components/post/Post';
+import NotFound from './components/not-found/NotFound';
 
 import './App.css';
-import { clearCurrentProfile } from './actions/profileActions';
 
-// Check for Token
+// Check for token
 if (localStorage.jwtToken) {
 	// Set auth token header auth
 	setAuthToken(localStorage.jwtToken);
-	// Decode Token and get User Info and expiration
+	// Decode token and get user info and exp
 	const decoded = jwt_decode(localStorage.jwtToken);
 	// Set user and isAuthenticated
 	store.dispatch(setCurrentUser(decoded));
@@ -43,13 +42,13 @@ if (localStorage.jwtToken) {
 	if (decoded.exp < currentTime) {
 		// Logout user
 		store.dispatch(logoutUser());
-		// TODO: Clear current profile
+		// Clear current Profile
 		store.dispatch(clearCurrentProfile());
-
 		// Redirect to login
 		window.location.href = '/login';
 	}
 }
+
 class App extends Component {
 	render() {
 		return (
@@ -61,7 +60,7 @@ class App extends Component {
 						<div className="container">
 							<Route exact path="/register" component={Register} />
 							<Route exact path="/login" component={Login} />
-							<Route exact path="/profile" component={Profiles} />
+							<Route exact path="/profiles" component={Profiles} />
 							<Route exact path="/profile/:handle" component={Profile} />
 							<Switch>
 								<PrivateRoute exact path="/dashboard" component={Dashboard} />

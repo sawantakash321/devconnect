@@ -18,11 +18,11 @@ class Post extends Component {
 		let postContent;
 
 		if (post === null || loading || Object.keys(post).length === 0) {
-			postContent = <Spnner />;
+			postContent = <Spinner />;
 		} else {
 			postContent = (
 				<div>
-					<PostItem post={post} showAction={false} />
+					<PostItem post={post} showActions={false} />
 					<CommentForm postId={post._id} />
 					<CommentFeed postId={post._id} comments={post.comments} />
 				</div>

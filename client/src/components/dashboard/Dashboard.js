@@ -10,7 +10,7 @@ import Education from './Education';
 
 class Dashboard extends Component {
 	componentDidMount() {
-		this.props.getCurrentprofile();
+		this.props.getCurrentProfile();
 	}
 
 	onDeleteClick(e) {
@@ -23,7 +23,7 @@ class Dashboard extends Component {
 
 		let dashboardContent;
 
-		if (profile === null || loading === true) {
+		if (profile === null || loading) {
 			dashboardContent = <Spinner />;
 		} else {
 			// Check if logged in user has profile data
@@ -31,8 +31,7 @@ class Dashboard extends Component {
 				dashboardContent = (
 					<div>
 						<p className="lead text-muted">
-							Welcome{' '}
-							<Link to={`/profile/${profile.handle}`}> {user.name}</Link>
+							Welcome <Link to={`/profile/${profile.handle}`}>{user.name}</Link>
 						</p>
 						<ProfileActions />
 						<Experience experience={profile.experience} />
@@ -65,7 +64,7 @@ class Dashboard extends Component {
 				<div className="container">
 					<div className="row">
 						<div className="col-md-12">
-							<h1 className="display-4">dashboard</h1>
+							<h1 className="display-4">Dashboard</h1>
 							{dashboardContent}
 						</div>
 					</div>
@@ -76,7 +75,7 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
-	getCurrentprofile: PropTypes.func.isRequired,
+	getCurrentProfile: PropTypes.func.isRequired,
 	deleteAccount: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired,
 	profile: PropTypes.object.isRequired

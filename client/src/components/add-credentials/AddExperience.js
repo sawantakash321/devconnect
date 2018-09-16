@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import TextFieldGroup from '../common/TextFieldGroup';
-import { TextAreaFieldGroup } from '../common/TextAreaFieldGroup';
-import connect from 'react-redux';
+import TextAreaFieldGroup from '../common/TectAreaFieldGroup';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addExperience } from '../../actions/profileActions';
 
 class AddExperience extends Component {
 	constructor(props) {
 		super(props);
-
 		this.state = {
 			company: '',
 			title: '',
@@ -21,6 +20,7 @@ class AddExperience extends Component {
 			errors: {},
 			disabled: false
 		};
+
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 		this.onCheck = this.onCheck.bind(this);
@@ -51,6 +51,7 @@ class AddExperience extends Component {
 	onChange(e) {
 		this.setState({ [e.target.name]: e.target.value });
 	}
+
 	onCheck(e) {
 		this.setState({
 			disabled: !this.state.disabled,
@@ -60,14 +61,15 @@ class AddExperience extends Component {
 
 	render() {
 		const { errors } = this.state;
+
 		return (
 			<div className="add-experience">
 				<div className="container">
 					<div className="row">
 						<div className="col-md-8 m-auto">
-							<link to="/dashboard" className="btn btn-light">
+							<Link to="/dashboard" className="btn btn-light">
 								Go Back
-							</link>
+							</Link>
 							<h1 className="display-4 text-center">Add Experience</h1>
 							<p className="lead text-center">
 								Add any job or position that you have had in the past or current
@@ -126,13 +128,13 @@ class AddExperience extends Component {
 										Current Job
 									</label>
 								</div>
-								<TextFieldGroup
+								<TextAreaFieldGroup
 									placeholder="Job Description"
 									name="description"
 									value={this.state.description}
 									onChange={this.onChange}
 									error={errors.description}
-									info="Tell us about the position"
+									info="Tell us about the the position"
 								/>
 								<input
 									type="submit"
@@ -149,9 +151,9 @@ class AddExperience extends Component {
 }
 
 AddExperience.propTypes = {
+	addExperience: PropTypes.func.isRequired,
 	profile: PropTypes.object.isRequired,
-	errors: PropTypes.object.isRequired,
-	addExperience: PropTypes.func.isRequired
+	errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({

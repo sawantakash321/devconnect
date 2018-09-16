@@ -4,8 +4,8 @@ import {
 	ADD_POST,
 	GET_ERRORS,
 	CLEAR_ERRORS,
-	GET_POST,
 	GET_POSTS,
+	GET_POST,
 	POST_LOADING,
 	DELETE_POST
 } from './types';
@@ -13,7 +13,6 @@ import {
 // Add Post
 export const addPost = postData => dispatch => {
 	dispatch(clearErrors());
-
 	axios
 		.post('/api/posts', postData)
 		.then(res =>
@@ -53,7 +52,7 @@ export const getPosts = () => dispatch => {
 export const getPost = id => dispatch => {
 	dispatch(setPostLoading());
 	axios
-		.get(`/api/post/${id}`)
+		.get(`/api/posts/${id}`)
 		.then(res =>
 			dispatch({
 				type: GET_POST,
@@ -149,7 +148,7 @@ export const deleteComment = (postId, commentId) => dispatch => {
 		);
 };
 
-// Set Loading State
+// Set loading state
 export const setPostLoading = () => {
 	return {
 		type: POST_LOADING

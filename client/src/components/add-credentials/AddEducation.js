@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import TextFieldGroup from '../common/TextFieldGroup';
-import { TextAreaFieldGroup } from '../common/TextAreaFieldGroup';
-import connect from 'react-redux';
+import TextAreaFieldGroup from '../common/TectAreaFieldGroup';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addEducation } from '../../actions/profileActions';
 
 class AddEducation extends Component {
 	constructor(props) {
 		super(props);
-
 		this.state = {
 			school: '',
 			degree: '',
@@ -21,6 +20,7 @@ class AddEducation extends Component {
 			errors: {},
 			disabled: false
 		};
+
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 		this.onCheck = this.onCheck.bind(this);
@@ -51,6 +51,7 @@ class AddEducation extends Component {
 	onChange(e) {
 		this.setState({ [e.target.name]: e.target.value });
 	}
+
 	onCheck(e) {
 		this.setState({
 			disabled: !this.state.disabled,
@@ -60,14 +61,15 @@ class AddEducation extends Component {
 
 	render() {
 		const { errors } = this.state;
+
 		return (
 			<div className="add-education">
 				<div className="container">
 					<div className="row">
 						<div className="col-md-8 m-auto">
-							<link to="/dashboard" className="btn btn-light">
+							<Link to="/dashboard" className="btn btn-light">
 								Go Back
-							</link>
+							</Link>
 							<h1 className="display-4 text-center">Add Education</h1>
 							<p className="lead text-center">
 								Add any school, bootcamp, etc that you have attended
@@ -126,8 +128,8 @@ class AddEducation extends Component {
 										Current Job
 									</label>
 								</div>
-								<TextFieldGroup
-									placeholder="Program  Description"
+								<TextAreaFieldGroup
+									placeholder="Program Description"
 									name="description"
 									value={this.state.description}
 									onChange={this.onChange}
@@ -149,9 +151,9 @@ class AddEducation extends Component {
 }
 
 AddEducation.propTypes = {
+	addEducation: PropTypes.func.isRequired,
 	profile: PropTypes.object.isRequired,
-	errors: PropTypes.object.isRequired,
-	addEducation: PropTypes.func.isRequired
+	errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
