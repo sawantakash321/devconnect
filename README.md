@@ -2,8 +2,7 @@
 
 > Small social network app built with the MERN stack.
 
-#Live Site
-https://hidden-mountain-88060.herokuapp.com/
+## Check out a live demo [here](https://hidden-mountain-88060.herokuapp.com/)
 
 ## Quick Start
 
